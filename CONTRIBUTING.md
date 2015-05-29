@@ -35,13 +35,13 @@ And install the dependencies:
 $ composer install
 ```
 
-Write your code, then add tests. Then run the tests:
+Write your code and add tests. Then run the tests:
 
 ```bash
 $ vendor/bin/phpunit
 ```
 
-Then commit your changes and push them to GitHub:
+Commit your changes and push them to GitHub:
 
 ```bash
 $ git commit -m "Fix nasty bug"
