@@ -30,7 +30,7 @@ Documentation is available at https://portphp.readthedocs.org.
 Contributing
 ------------
 
-Contributions are very welcome. Please see [CONTRIBUTING](CONTRIBUTING.md) for
+Contributions are very welcome. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for
 details. Thanks to [everyone who has contributed](https://github.com/portphp/boilerplate/graphs/contributors)
 already.
 
