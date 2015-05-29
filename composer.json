@@ -1,0 +1,42 @@
+{
+    "name": "portphp/boilerplate",
+    "description": "Boilerplate",
+    "license": "MIT",
+    "homepage": "https://github.com/portphp",
+    "authors": [
+        {
+            "name": "David de Boer",
+            "email": "david@ddeboer.nl"
+        },
+        {
+            "name": "Markus Bachmann",
+            "email": "markus.bachmann@bachi.biz"
+        },
+        {
+            "name": "Community contributors",
+            "homepage": "https://github.com/portphp/boilerplate/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/portphp/boilerplate/issues",
+        "source": "https://github.com/portphp/boilerplate",
+        "docs": "https://portphp.readthedocs.org"
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Portphp\\Boilerplate\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0",
+        "phpspec/phpspec": "~2.1"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Portphp\\Boilerplate\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,5 @@
+suites:
+  library_suite:
+    namespace: Portphp\Boilerplate
+    psr4_prefix: Portphp\Boilerplate
+formatter.name: pretty
