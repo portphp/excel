@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Portphp\\Boilerplate\\": "src/"
+            "Port\\Boilerplate\\": "src/"
         }
     },
     "require-dev": {
@@ -36,7 +36,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Portphp\\Boilerplate\\Tests\\": "tests/"
+            "Port\\Boilerplate\\Tests\\": "tests/"
         }
     }
 }

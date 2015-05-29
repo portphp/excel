@@ -1,5 +1,5 @@
 suites:
   library_suite:
-    namespace: Portphp\Boilerplate
-    psr4_prefix: Portphp\Boilerplate
+    namespace: Port\Boilerplate
+    psr4_prefix: Port\Boilerplate
 formatter.name: pretty
