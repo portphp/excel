@@ -7,7 +7,7 @@ php:
   - 7
   - hhvm
 
-before_script:
+install:
   - travis_retry composer install --prefer-source --no-interaction --dev
 
 script: phpunit
