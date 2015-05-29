@@ -29,6 +29,12 @@ $ git clone https://github.com/your-name/repo-name.git
 $ git checkout -b bug-or-feature-description
 ```
 
+And install the dependencies:
+
+```bash
+$ composer install
+```
+
 Write your code, then add tests. Then run the tests:
 
 ```bash
