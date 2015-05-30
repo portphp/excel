@@ -38,5 +38,10 @@
         "psr-4": {
             "Port\\Boilerplate\\Tests\\": "tests/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
