@@ -2,7 +2,7 @@
 
 namespace Port\Excel\Factory;
 
-use Port\Reader\ExcelReader;
+use Port\Excel\ExcelReader;
 
 /**
  * Factory that creates ExcelReaders
