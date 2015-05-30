@@ -2,7 +2,7 @@
 
 namespace Port\Tests\Reader;
 
-use Port\Reader\ExcelReader;
+use Port\Excel\ExcelReader;
 
 class ExcelReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFields()
     {
-        $file = new \SplFileObject(__DIR__.'/../Fixtures/data_column_headers.xlsx');
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
         $reader = new ExcelReader($file, 0);
         $this->assertEquals(array('id', 'number', 'description'), $reader->getFields());
         $this->assertEquals(array('id', 'number', 'description'), $reader->getColumnHeaders());
@@ -23,21 +23,21 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testCountWithoutHeaders()
     {
-        $file = new \SplFileObject(__DIR__.'/../Fixtures/data_no_column_headers.xls');
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
         $reader = new ExcelReader($file);
         $this->assertEquals(3, $reader->count());
     }
 
     public function testCountWithHeaders()
     {
-        $file = new \SplFileObject(__DIR__.'/../Fixtures/data_column_headers.xlsx');
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
         $reader = new ExcelReader($file, 0);
         $this->assertEquals(3, $reader->count());
     }
 
     public function testIterate()
     {
-        $file = new \SplFileObject(__DIR__.'/../Fixtures/data_column_headers.xlsx');
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
         $reader = new ExcelReader($file, 0);
         foreach ($reader as $row) {
             $this->assertInternalType('array', $row);
@@ -47,7 +47,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testMultiSheet()
     {
-        $file = new \SplFileObject(__DIR__.'/../Fixtures/data_multi_sheet.xls');
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_multi_sheet.xls');
         $sheet1reader = new ExcelReader($file, null, 0);
         $this->assertEquals(3, $sheet1reader->count());
 

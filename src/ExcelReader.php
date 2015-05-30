@@ -1,6 +1,8 @@
 <?php
 
-namespace Port\Reader;
+namespace Port\Excel;
+
+use Port\Reader\CountableReader;
 
 /**
  * Reads Excel files with the help of PHPExcel

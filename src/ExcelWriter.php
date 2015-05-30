@@ -1,6 +1,6 @@
 <?php
 
-namespace Port\Writer;
+namespace Port\Excel;
 
 use Port\Writer;
 use PHPExcel;

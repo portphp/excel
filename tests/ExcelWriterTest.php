@@ -2,7 +2,7 @@
 
 namespace Port\Tests\Writer;
 
-use Port\Writer\ExcelWriter;
+use Port\Excel\ExcelWriter;
 
 class ExcelWriterTest extends \PHPUnit_Framework_TestCase
 {
