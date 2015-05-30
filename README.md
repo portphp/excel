@@ -1,7 +1,7 @@
 # portphp/boilerplate
 
 [![Latest Version](https://img.shields.io/github/release/portphp/boilerplate.svg?style=flat-square)](https://github.com/portphp/boilerplate/releases)
-[![Build Status](https://travis-ci.org/portphp/boilerplate?branch=master)](https://travis-ci.org/portphp/boilerplate)
+[![Build Status](https://travis-ci.org/portphp/boilerplate.svg)](https://travis-ci.org/portphp/boilerplate)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/portphp/boilerplate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/portphp/boilerplate/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/portphp/boilerplate/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/portphp/boilerplate/?branch=master)
 
