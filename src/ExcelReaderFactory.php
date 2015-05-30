@@ -1,8 +1,6 @@
 <?php
 
-namespace Port\Excel\Factory;
-
-use Port\Excel\ExcelReader;
+namespace Port\Excel;
 
 /**
  * Factory that creates ExcelReaders

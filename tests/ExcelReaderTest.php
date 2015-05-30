@@ -1,6 +1,6 @@
 <?php
 
-namespace Port\Tests\Reader;
+namespace Port\Excel\Tests;
 
 use Port\Excel\ExcelReader;
 

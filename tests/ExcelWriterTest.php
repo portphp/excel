@@ -1,6 +1,6 @@
 <?php
 
-namespace Port\Tests\Writer;
+namespace Port\Excel\Tests;
 
 use Port\Excel\ExcelWriter;
 
