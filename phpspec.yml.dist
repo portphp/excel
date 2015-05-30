@@ -1,5 +1,0 @@
-suites:
-  library_suite:
-    namespace: Port\Excel
-    psr4_prefix: Port\Excel
-formatter.name: pretty
