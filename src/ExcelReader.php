@@ -185,14 +185,6 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getFields()
-    {
-        return $this->columnHeaders;
-    }
-
-    /**
      * Get a row
      *
      * @param integer $number

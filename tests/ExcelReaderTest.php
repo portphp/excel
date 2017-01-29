@@ -13,14 +13,6 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testGetFields()
-    {
-        $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
-        $reader = new ExcelReader($file, 0);
-        $this->assertEquals(array('id', 'number', 'description'), $reader->getFields());
-        $this->assertEquals(array('id', 'number', 'description'), $reader->getColumnHeaders());
-    }
-
     public function testCountWithoutHeaders()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
