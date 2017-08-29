@@ -48,8 +48,9 @@ class ExcelReader implements CountableReader, \SeekableIterator
      * @param integer        $headerRowNumber Optional number of header row
      * @param integer        $activeSheet     Index of active sheet to read from
      * @param boolean        $readOnly        If set to false, the reader take care of the excel formatting (slow)
+     * @param integer        $maxRows         Maximum number of rows to read
      */
-    public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true)
+    public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true, $maxRows = null)
     {
         $reader = \PHPExcel_IOFactory::createReaderForFile($file->getPathName());
         $reader->setReadDataOnly($readOnly);
@@ -59,8 +60,14 @@ class ExcelReader implements CountableReader, \SeekableIterator
         if (null !== $activeSheet) {
             $excel->setActiveSheetIndex($activeSheet);
         }
+        $sheet = $excel->getActiveSheet();
 
-        $this->worksheet = $excel->getActiveSheet()->toArray();
+        if ($maxRows) {
+            $maxColumn = $sheet->getHighestDataColumn();
+            $this->worksheet = $sheet->rangeToArray('A1:' . $maxColumn . $maxRows);
+        } else {
+            $this->worksheet = $excel->getActiveSheet()->toArray();
+        }
 
         if (null !== $headerRowNumber) {
             $this->setHeaderRowNumber($headerRowNumber);

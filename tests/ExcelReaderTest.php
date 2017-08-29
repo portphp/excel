@@ -46,4 +46,15 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         $sheet2reader = new ExcelReader($file, null, 1);
         $this->assertEquals(2, $sheet2reader->count());
     }
+
+    public function testExtremeLastRow()
+    {
+        // Without $maxRows, this faulty file causes OOM because of an extremely
+        //high last row number
+        $file = new \SplFileObject(__DIR__.'/fixtures/data_extreme_last_row.xlsx');
+
+        $max = 5;
+        $sheet1reader = new ExcelReader($file, null, null, null, $max);
+        $this->assertEquals($max, $sheet1reader->count());
+    }
 }
