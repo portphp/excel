@@ -23,7 +23,6 @@
         "docs": "https://portphp.readthedocs.org"
     },
     "require": {
-        "php": ">=5.6.0",
         "portphp/portphp": "^1.2.0",
         "phpoffice/phpexcel": "~1.8"
     },
