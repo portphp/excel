@@ -2,12 +2,14 @@
 
 namespace Port\Excel;
 
+use Port\Reader\ReaderFactory;
+
 /**
  * Factory that creates ExcelReaders
  *
  * @author David de Boer <david@ddeboer.nl>
  */
-class ExcelReaderFactory
+class ExcelReaderFactory implements ReaderFactory
 {
     /**
      * @var integer
