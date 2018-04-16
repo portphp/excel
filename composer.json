@@ -43,5 +43,8 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
+    },
+    "suggest": {
+        "ext-zip": "To support writing of Excel files"
     }
 }
