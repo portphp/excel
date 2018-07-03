@@ -25,12 +25,12 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
 
         $writer->writeItem(array(
             'first' => 'James',
-            'last'  => 'Bond'
+            'last'  => 'Bond',
         ));
 
         $writer->writeItem(array(
             'first' => '',
-            'last'  => 'Dr. No'
+            'last'  => 'Dr. No',
         ));
 
         $writer->finish();
@@ -44,7 +44,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
 
         $writer->writeItem(array(
             'first' => 'Miss',
-            'last'  => 'Moneypenny'
+            'last'  => 'Moneypenny',
         ));
 
         $writer->finish();
@@ -85,7 +85,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
         $writer->writeItem(array(
             'col 1 name'=>'col 1 value',
             'col 2 name'=>'col 2 value',
-            'col 3 name'=>'col 3 value'
+            'col 3 name'=>'col 3 value',
         ));
         $writer->finish();
 
@@ -113,7 +113,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
         $writer->writeItem(array(
             'col 1 name'=>'col 1 value',
             'col 2 name'=>'col 2 value',
-            'col 3 name'=>'col 3 value'
+            'col 3 name'=>'col 3 value',
         ));
         $writer->finish();
 
