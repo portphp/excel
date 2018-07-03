@@ -13,6 +13,9 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     *
+     */
     public function testCountWithoutHeaders()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
@@ -20,6 +23,9 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $reader->count());
     }
 
+    /**
+     *
+     */
     public function testCountWithHeaders()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
@@ -27,6 +33,9 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $reader->count());
     }
 
+    /**
+     *
+     */
     public function testIterate()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
@@ -37,6 +46,9 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     *
+     */
     public function testMultiSheet()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_multi_sheet.xls');
@@ -47,6 +59,9 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $sheet2reader->count());
     }
 
+    /**
+     *
+     */
     public function testMaxRowNumb()
     {
         $file = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');

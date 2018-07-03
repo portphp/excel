@@ -13,6 +13,9 @@ class ExcelReaderFactoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     *
+     */
     public function testGetReader()
     {
         $factory = new ExcelReaderFactory();
