@@ -88,7 +88,7 @@ class ExcelWriter implements Writer
             $headers = array_keys($item);
 
             for ($i = 0; $i < $count; $i++) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i, $this->row, $headers[$i]);
+                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i+1, $this->row, $headers[$i]);
             }
             $this->row++;
         }
@@ -96,7 +96,7 @@ class ExcelWriter implements Writer
         $values = array_values($item);
 
         for ($i = 0; $i < $count; $i++) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i, $this->row, $values[$i]);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i+1, $this->row, $values[$i]);
         }
 
         $this->row++;
