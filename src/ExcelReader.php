@@ -45,6 +45,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
      */
     protected $count;
 
+    // phpcs:disable Generic.Files.LineLength.MaxExceeded
     /**
      * @param \SplFileObject $file            Excel file
      * @param int            $headerRowNumber Optional number of header row
@@ -54,6 +55,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
      */
     public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true, $maxRows = null)
     {
+        // phpcs:enable Generic.Files.LineLength.MaxExceeded
         $reader = IOFactory::createReaderForFile($file->getPathName());
         $reader->setReadDataOnly($readOnly);
         /** @var Spreadsheet $excel */
