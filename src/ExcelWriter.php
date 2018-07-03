@@ -84,7 +84,7 @@ class ExcelWriter implements Writer
     {
         $count = count($item);
 
-        if ($this->prependHeaderRow && 1 == $this->row) {
+        if ($this->prependHeaderRow && 1 === $this->row) {
             $headers = array_keys($item);
 
             for ($i = 0; $i < $count; $i++) {

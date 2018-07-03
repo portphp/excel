@@ -94,7 +94,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
         if (!empty($this->columnHeaders)) {
             // Count the number of elements in both: they must be equal.
             // If not, ignore the row
-            if (count($this->columnHeaders) == count($row)) {
+            if (count($this->columnHeaders) === count($row)) {
                 return array_combine(array_values($this->columnHeaders), $row);
             }
         } else {
