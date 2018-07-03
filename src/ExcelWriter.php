@@ -3,8 +3,8 @@
 namespace Port\Excel;
 
 use Port\Writer;
-use PHPExcel;
-use PHPExcel_IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Writes to an Excel file
@@ -34,7 +34,7 @@ class ExcelWriter implements Writer
     protected $prependHeaderRow;
 
     /**
-     * @var PHPExcel
+     * @var Spreadsheet
      */
     protected $excel;
 
@@ -46,10 +46,10 @@ class ExcelWriter implements Writer
     /**
      * @param \SplFileObject $file  File
      * @param string         $sheet Sheet title (optional)
-     * @param string         $type  Excel file type (defaults to Excel2007)
+     * @param string         $type  Excel file type (defaults to Xlsx)
      * @param boolean        $prependHeaderRow
      */
-    public function __construct(\SplFileObject $file, $sheet = null, $type = 'Excel2007', $prependHeaderRow = false)
+    public function __construct(\SplFileObject $file, $sheet = null, $type = 'Xlsx', $prependHeaderRow = false)
     {
         $this->filename = $file->getPathname();
         $this->sheet = $sheet;
@@ -62,11 +62,11 @@ class ExcelWriter implements Writer
      */
     public function prepare()
     {
-        $reader = PHPExcel_IOFactory::createReader($this->type);
+        $reader = IOFactory::createReader($this->type);
         if ($reader->canRead($this->filename)) {
             $this->excel = $reader->load($this->filename);
         } else {
-            $this->excel = new PHPExcel();
+            $this->excel = new Spreadsheet();
         }
 
         if (null !== $this->sheet) {
@@ -107,7 +107,7 @@ class ExcelWriter implements Writer
      */
     public function finish()
     {
-        $writer = \PHPExcel_IOFactory::createWriter($this->excel, $this->type);
+        $writer = IOFactory::createWriter($this->excel, $this->type);
         $writer->save($this->filename);
     }
 }
