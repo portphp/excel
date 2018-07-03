@@ -24,12 +24,12 @@ class ExcelReader implements CountableReader, \SeekableIterator
     protected $worksheet;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $headerRowNumber;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $pointer = 0;
 
@@ -41,16 +41,16 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * Total number of rows
      *
-     * @var integer
+     * @var int
      */
     protected $count;
 
     /**
      * @param \SplFileObject $file            Excel file
-     * @param integer        $headerRowNumber Optional number of header row
-     * @param integer        $activeSheet     Index of active sheet to read from
-     * @param boolean        $readOnly        If set to false, the reader take care of the excel formatting (slow)
-     * @param integer        $maxRows         Maximum number of rows to read
+     * @param int            $headerRowNumber Optional number of header row
+     * @param int            $activeSheet     Index of active sheet to read from
+     * @param bool           $readOnly        If set to false, the reader take care of the excel formatting (slow)
+     * @param int            $maxRows         Maximum number of rows to read
      */
     public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true, $maxRows = null)
     {
@@ -140,7 +140,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * Set header row number
      *
-     * @param integer $rowNumber Number of the row that contains column header names
+     * @param int $rowNumber Number of the row that contains column header names
      */
     public function setHeaderRowNumber($rowNumber)
     {
@@ -196,7 +196,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * Get a row
      *
-     * @param integer $number
+     * @param int $number
      *
      * @return array
      */

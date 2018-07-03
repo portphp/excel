@@ -29,7 +29,7 @@ class ExcelWriter implements Writer
     protected $type;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $prependHeaderRow;
 
@@ -39,7 +39,7 @@ class ExcelWriter implements Writer
     protected $excel;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $row = 1;
 
@@ -47,7 +47,7 @@ class ExcelWriter implements Writer
      * @param \SplFileObject $file  File
      * @param string         $sheet Sheet title (optional)
      * @param string         $type  Excel file type (defaults to Xlsx)
-     * @param boolean        $prependHeaderRow
+     * @param bool           $prependHeaderRow
      */
     public function __construct(\SplFileObject $file, $sheet = null, $type = 'Xlsx', $prependHeaderRow = false)
     {

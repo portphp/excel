@@ -12,18 +12,18 @@ use Port\Reader\ReaderFactory;
 class ExcelReaderFactory implements ReaderFactory
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $headerRowNumber;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $activeSheet;
 
     /**
-     * @param integer $headerRowNumber
-     * @param integer $activeSheet
+     * @param int $headerRowNumber
+     * @param int $activeSheet
      */
     public function __construct($headerRowNumber = null, $activeSheet = null)
     {
