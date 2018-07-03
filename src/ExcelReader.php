@@ -66,7 +66,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
 
         if ($maxRows && $maxRows < $sheet->getHighestDataRow()) {
             $maxColumn = $sheet->getHighestDataColumn();
-            $this->worksheet = $sheet->rangeToArray('A1:' . $maxColumn . $maxRows);
+            $this->worksheet = $sheet->rangeToArray('A1:'.$maxColumn.$maxRows);
         } else {
             $this->worksheet = $excel->getActiveSheet()->toArray();
         }

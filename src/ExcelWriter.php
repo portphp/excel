@@ -44,9 +44,9 @@ class ExcelWriter implements Writer
     protected $row = 1;
 
     /**
-     * @param \SplFileObject $file  File
-     * @param string         $sheet Sheet title (optional)
-     * @param string         $type  Excel file type (defaults to Xlsx)
+     * @param \SplFileObject $file             File
+     * @param string         $sheet            Sheet title (optional)
+     * @param string         $type             Excel file type (defaults to Xlsx)
      * @param bool           $prependHeaderRow
      */
     public function __construct(\SplFileObject $file, $sheet = null, $type = 'Xlsx', $prependHeaderRow = false)
