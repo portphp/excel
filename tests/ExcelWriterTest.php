@@ -5,8 +5,14 @@ namespace Port\Excel\Tests;
 use Port\Excel\ExcelWriter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+/**
+ * {@inheritDoc}
+ */
 class ExcelWriterTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
         if (!extension_loaded('zip')) {
