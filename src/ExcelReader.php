@@ -13,8 +13,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
  *
  * @author David de Boer <david@ddeboer.nl>
  *
- * @link http://phpexcel.codeplex.com/
- * @link https://github.com/logiQ/PHPExcel
+ * @see http://phpexcel.codeplex.com/
+ * @see https://github.com/logiQ/PHPExcel
  */
 class ExcelReader implements CountableReader, \SeekableIterator
 {
