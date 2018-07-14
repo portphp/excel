@@ -13,8 +13,8 @@ clean:
 # End Cleaning Targets
 
 # Begin Test Targets
-test.all: phpcs phpunit
-test.strict: phpcs.warnings phpunit
+test.all: phpcs phpunit phpstan
+test.strict: phpcs.warnings phpunit phpstan
 
 phpcs: phpcs.errors
 
@@ -35,6 +35,28 @@ phpcs.errors: composer
 phpcbf.errors: composer
 	vendor/bin/phpcbf -p --colors --warning-severity=0 --standard=phpcs.xml src/
 	vendor/bin/phpcbf -p --colors --warning-severity=0 --standard=phpcs.xml tests/
+
+# https://github.com/phpstan/phpstan#rule-levels
+phpstan: phpstan.default
+phpstan.default: phpstan.0
+phpstan.0: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 0 -a vendor/autoload.php src
+phpstan.1: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 1 -a vendor/autoload.php src
+phpstan.2: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 2 -a vendor/autoload.php src
+phpstan.3: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 3 -a vendor/autoload.php src
+phpstan.4: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 4 -a vendor/autoload.php src
+phpstan.5: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 5 -a vendor/autoload.php src
+phpstan.6: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 6 -a vendor/autoload.php src
+phpstan.7: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level 7 -a vendor/autoload.php src
+phpstan.max: composer
+	vendor/bin/phpstan analyze -c phpstan.neon --level max -a vendor/autoload.php src
 
 phpunit: composer
 	vendor/bin/phpunit

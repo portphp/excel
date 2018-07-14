@@ -1,0 +1,3 @@
+# vim: set ft=yaml:
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
