@@ -21,12 +21,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 namespace Port\Excel;
 
-use Port\Reader\CountableReader;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Port\Reader\CountableReader;
 
 /**
  * Reads Excel files with the help of PHPExcel
@@ -43,7 +43,14 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * @var array
      */
-    protected $worksheet;
+    protected $columnHeaders;
+
+    /**
+     * Total number of rows
+     *
+     * @var int
+     */
+    protected $count;
 
     /**
      * @var int
@@ -58,14 +65,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * @var array
      */
-    protected $columnHeaders;
-
-    /**
-     * Total number of rows
-     *
-     * @var int
-     */
-    protected $count;
+    protected $worksheet;
 
     // phpcs:disable Generic.Files.LineLength.MaxExceeded
     /**
@@ -89,7 +89,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
         $sheet = $excel->getActiveSheet();
 
         if ($maxRows && $maxRows < $sheet->getHighestDataRow()) {
-            $maxColumn = $sheet->getHighestDataColumn();
+            $maxColumn       = $sheet->getHighestDataColumn();
             $this->worksheet = $sheet->rangeToArray('A1:'.$maxColumn.$maxRows);
         } else {
             $this->worksheet = $excel->getActiveSheet()->toArray();
@@ -98,6 +98,19 @@ class ExcelReader implements CountableReader, \SeekableIterator
         if (null !== $headerRowNumber) {
             $this->setHeaderRowNumber($headerRowNumber);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        $count = count($this->worksheet);
+        if (null !== $this->headerRowNumber) {
+            $count--;
+        }
+
+        return $count;
     }
 
     /**
@@ -136,13 +149,33 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * Set column headers
+     * Get a row
      *
-     * @param array $columnHeaders
+     * @param int $number
+     *
+     * @return array
      */
-    public function setColumnHeaders(array $columnHeaders)
+    public function getRow($number)
     {
-        $this->columnHeaders = $columnHeaders;
+        $this->seek($number);
+
+        return $this->current();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function key()
+    {
+        return $this->pointer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next()
+    {
+        $this->pointer++;
     }
 
     /**
@@ -162,41 +195,6 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * Set header row number
-     *
-     * @param int $rowNumber Number of the row that contains column header names
-     */
-    public function setHeaderRowNumber($rowNumber)
-    {
-        $this->headerRowNumber = $rowNumber;
-        $this->columnHeaders = $this->worksheet[$rowNumber];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
-    {
-        $this->pointer++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
-    {
-         return isset($this->worksheet[$this->pointer]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
-    {
-        return $this->pointer;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function seek($pointer)
@@ -205,29 +203,31 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Set column headers
+     *
+     * @param array $columnHeaders
      */
-    public function count()
+    public function setColumnHeaders(array $columnHeaders)
     {
-        $count = count($this->worksheet);
-        if (null !== $this->headerRowNumber) {
-            $count--;
-        }
-
-        return $count;
+        $this->columnHeaders = $columnHeaders;
     }
 
     /**
-     * Get a row
+     * Set header row number
      *
-     * @param int $number
-     *
-     * @return array
+     * @param int $rowNumber Number of the row that contains column header names
      */
-    public function getRow($number)
+    public function setHeaderRowNumber($rowNumber)
     {
-        $this->seek($number);
+        $this->headerRowNumber = $rowNumber;
+        $this->columnHeaders   = $this->worksheet[$rowNumber];
+    }
 
-        return $this->current();
+    /**
+     * {@inheritdoc}
+     */
+    public function valid()
+    {
+        return isset($this->worksheet[$this->pointer]);
     }
 }

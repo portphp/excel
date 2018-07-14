@@ -21,12 +21,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 namespace Port\Excel;
 
-use Port\Writer;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Port\Writer;
 
 /**
  * Writes to an Excel file
@@ -36,9 +36,24 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class ExcelWriter implements Writer
 {
     /**
+     * @var Spreadsheet
+     */
+    protected $excel;
+
+    /**
      * @var string
      */
     protected $filename;
+
+    /**
+     * @var bool
+     */
+    protected $prependHeaderRow;
+
+    /**
+     * @var int
+     */
+    protected $row = 1;
 
     /**
      * @var null|string
@@ -51,21 +66,6 @@ class ExcelWriter implements Writer
     protected $type;
 
     /**
-     * @var bool
-     */
-    protected $prependHeaderRow;
-
-    /**
-     * @var Spreadsheet
-     */
-    protected $excel;
-
-    /**
-     * @var int
-     */
-    protected $row = 1;
-
-    /**
      * @param \SplFileObject $file             File
      * @param string         $sheet            Sheet title (optional)
      * @param string         $type             Excel file type (defaults to Xlsx)
@@ -73,10 +73,19 @@ class ExcelWriter implements Writer
      */
     public function __construct(\SplFileObject $file, $sheet = null, $type = 'Xlsx', $prependHeaderRow = false)
     {
-        $this->filename = $file->getPathname();
-        $this->sheet = $sheet;
-        $this->type = $type;
+        $this->filename         = $file->getPathname();
+        $this->sheet            = $sheet;
+        $this->type             = $type;
         $this->prependHeaderRow = $prependHeaderRow;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function finish()
+    {
+        $writer = IOFactory::createWriter($this->excel, $this->type);
+        $writer->save($this->filename);
     }
 
     /**
@@ -110,7 +119,7 @@ class ExcelWriter implements Writer
             $headers = array_keys($item);
 
             for ($i = 0; $i < $count; $i++) {
-                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i+1, $this->row, $headers[$i]);
+                $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i + 1, $this->row, $headers[$i]);
             }
             $this->row++;
         }
@@ -118,18 +127,9 @@ class ExcelWriter implements Writer
         $values = array_values($item);
 
         for ($i = 0; $i < $count; $i++) {
-            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i+1, $this->row, $values[$i]);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow($i + 1, $this->row, $values[$i]);
         }
 
         $this->row++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function finish()
-    {
-        $writer = IOFactory::createWriter($this->excel, $this->type);
-        $writer->save($this->filename);
     }
 }
