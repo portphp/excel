@@ -167,6 +167,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
             ),
             $row
         );
+        $this->assertEquals(0, $reader->key());
 
         $row = $reader->getRow(3);
         $this->assertEquals(
@@ -177,6 +178,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
             ),
             $row
         );
+        $this->assertEquals(3, $reader->key());
 
         $row = $reader->getRow(1);
         $this->assertEquals(
@@ -187,6 +189,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
             ),
             $row
         );
+        $this->assertEquals(1, $reader->key());
 
         $row = $reader->getRow(2);
         $this->assertEquals(
@@ -197,6 +200,7 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
             ),
             $row
         );
+        $this->assertEquals(2, $reader->key());
     }
 
     /**
