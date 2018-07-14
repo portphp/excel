@@ -127,20 +127,14 @@ class ExcelReader implements CountableReader, \SeekableIterator
     {
         $row = $this->worksheet[$this->pointer];
 
-        // If the CSV has column headers, use them to construct an associative
+        // If the excel file has column headers, use them to construct an associative
         // array for the columns in this line
-        if (!empty($this->columnHeaders)) {
-            // Count the number of elements in both: they must be equal.
-            // If not, ignore the row
-            if (count($this->columnHeaders) === count($row)) {
-                return array_combine(array_values($this->columnHeaders), $row);
-            }
-
-            return null;
-        } else {
-            // Else just return the column values
-            return $row;
+        if (count($this->columnHeaders) === count($row)) {
+            return array_combine(array_values($this->columnHeaders), $row);
         }
+
+        // Else just return the column values
+        return $row;
     }
 
     /**
