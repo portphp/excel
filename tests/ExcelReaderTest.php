@@ -42,14 +42,57 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function testIterate()
+    public function testIterateWithHeaders()
     {
-        $file = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
         $reader = new ExcelReader($file, 0);
+
+        $actualData   = array();
+        $expectedData = array(
+            array(
+                'id'          => 50.0,
+                'number'      => 123.0,
+                'description' => 'Description',
+            ),
+            array(
+                'id'          => 6.0,
+                'number'      => 456.0,
+                'description' => 'Another description',
+            ),
+            array(
+                'id'          => 7.0,
+                'number'      => 7890.0,
+                'description' => 'Some more info',
+            ),
+        );
+
         foreach ($reader as $row) {
-            $this->assertInternalType('array', $row);
-            $this->assertEquals(array('id', 'number', 'description'), array_keys($row));
+            $actualData[] = $row;
         }
+
+        $this->assertEquals($expectedData, $actualData);
+    }
+
+    /**
+     *
+     */
+    public function testIterateWithoutHeaders()
+    {
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
+        $reader = new ExcelReader($file);
+
+        $actualData   = array();
+        $expectedData = array(
+            array(50.0, 123.0, "Description"),
+            array(6.0, 456.0, 'Another description'),
+            array(7.0, 7890.0, 'Some more info'),
+        );
+
+        foreach ($reader as $row) {
+            $actualData[] = $row;
+        }
+
+        $this->assertEquals($expectedData, $actualData);
     }
 
     /**
