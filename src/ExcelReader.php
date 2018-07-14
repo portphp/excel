@@ -101,7 +101,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * @return int
      */
     public function count()
     {
@@ -118,7 +118,7 @@ class ExcelReader implements CountableReader, \SeekableIterator
      *
      * If a header row has been set, an associative array will be returned
      *
-     * @return array
+     * @return array|null
      */
     public function current()
     {
@@ -165,7 +165,9 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Return the key of the current element
+     *
+     * @return int
      */
     public function key()
     {
@@ -173,7 +175,9 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Move forward to next element
+     *
+     * @return void Any returned value is ignored.
      */
     public function next()
     {
@@ -186,6 +190,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
      * If a header row has been set, the pointer is set just below the header
      * row. That way, when you iterate over the rows, that header row is
      * skipped.
+     *
+     * @return void Any returned value is ignored.
      */
     public function rewind()
     {
@@ -197,7 +203,13 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Seeks to a position
+     *
+     * @link http://php.net/manual/en/seekableiterator.seek.php
+     *
+     * @param int $pointer The position to seek to.
+     *
+     * @return void Any returned value is ignored.
      */
     public function seek($pointer)
     {
@@ -208,6 +220,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
      * Set column headers
      *
      * @param array $columnHeaders
+     *
+     * @return void Any returned value is ignored.
      */
     public function setColumnHeaders(array $columnHeaders)
     {
@@ -218,6 +232,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
      * Set header row number
      *
      * @param int $rowNumber Number of the row that contains column header names
+     *
+     * @return void Any returned value is ignored.
      */
     public function setHeaderRowNumber($rowNumber)
     {
@@ -226,7 +242,10 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Checks if current position is valid
+     *
+     * @return bool The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
      */
     public function valid()
     {

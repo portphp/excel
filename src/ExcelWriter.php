@@ -80,7 +80,9 @@ class ExcelWriter implements Writer
     }
 
     /**
-     * {@inheritdoc}
+     * Wrap up the writer after all items have been written
+     *
+     * @return void Any returned value is ignored.
      */
     public function finish()
     {
@@ -89,7 +91,9 @@ class ExcelWriter implements Writer
     }
 
     /**
-     * {@inheritdoc}
+     * Prepare the writer before writing the items
+     *
+     * @return void Any returned value is ignored.
      */
     public function prepare()
     {
@@ -109,7 +113,11 @@ class ExcelWriter implements Writer
     }
 
     /**
-     * {@inheritdoc}
+     * Write one data item
+     *
+     * @param array $item The data item with converted values
+     *
+     * @return void Any returned value is ignored.
      */
     public function writeItem(array $item)
     {
