@@ -61,6 +61,9 @@ phpstan.max: composer
 
 phpunit: composer
 	vendor/bin/phpunit
+
+phpunit.coverage: composer
+	vendor/bin/phpunit --coverage-html coverageReport
 # End Test Targets
 
 # Begin Prepare Targets
