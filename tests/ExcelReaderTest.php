@@ -64,6 +64,130 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
+    public function testCustomColumnHeadersWithHeaders()
+    {
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
+        $reader = new ExcelReader($file, 0);
+
+        $this->assertEquals(
+            array(
+                'id',
+                'number',
+                'description',
+            ),
+            $reader->getColumnHeaders()
+        );
+
+        $reader->setColumnHeaders(
+            array(
+                'id2',
+                'number2',
+                'description2',
+            )
+        );
+
+        $this->assertEquals(
+            array(
+                'id2',
+                'number2',
+                'description2',
+            ),
+            $reader->getColumnHeaders()
+        );
+
+        // TODO: Check if row 0 should return the header row if headers are enabled.
+        // Row 0 returns the header row as data and indexes.
+        $row = $reader->getRow(0);
+        $this->assertEquals(
+            array(
+                'id2'          => 'id',
+                'number2'      => 'number',
+                'description2' => 'description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(3);
+        $this->assertEquals(
+            array(
+                'id2'          => 7.0,
+                'number2'      => 7890.0,
+                'description2' => 'Some more info',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(1);
+        $this->assertEquals(
+            array(
+                'id2'          => 50.0,
+                'number2'      => 123.0,
+                'description2' => 'Description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(2);
+        $this->assertEquals(
+            array(
+                'id2'          => 6.0,
+                'number2'      => 456.0,
+                'description2' => 'Another description',
+            ),
+            $row
+        );
+    }
+
+    /**
+     *
+     */
+    public function testCustomColumnHeadersWithoutHeaders()
+    {
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
+        $reader = new ExcelReader($file);
+
+        $reader->setColumnHeaders(
+            array(
+                'id',
+                'number',
+                'description',
+            )
+        );
+
+        $row = $reader->getRow(2);
+        $this->assertEquals(
+            array(
+                'id'          => 7.0,
+                'number'      => 7890.0,
+                'description' => 'Some more info',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(0);
+        $this->assertEquals(
+            array(
+                'id'          => 50.0,
+                'number'      => 123.0,
+                'description' => 'Description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(1);
+        $this->assertEquals(
+            array(
+                'id'          => 6.0,
+                'number'      => 456.0,
+                'description' => 'Another description',
+            ),
+            $row
+        );
+    }
+
+    /**
+     *
+     */
     public function testIterateWithHeaders()
     {
         $file   = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
