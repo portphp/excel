@@ -13,6 +13,9 @@ clean:
 # End Cleaning Targets
 
 # Begin Test Targets
+test.all: phpcs phpunit
+test.strict: phpcs.warnings phpunit
+
 phpcs: phpcs.errors
 
 phpcbf: phpcbf.errors
