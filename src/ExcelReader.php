@@ -132,6 +132,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
             if (count($this->columnHeaders) === count($row)) {
                 return array_combine(array_values($this->columnHeaders), $row);
             }
+
+            return null;
         } else {
             // Else just return the column values
             return $row;
