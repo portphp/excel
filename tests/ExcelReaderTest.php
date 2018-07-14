@@ -147,4 +147,94 @@ class ExcelReaderTest extends \PHPUnit_Framework_TestCase
         $sheet2reader = new ExcelReader($file, null, 1);
         $this->assertEquals(2, $sheet2reader->count());
     }
+
+    /**
+     *
+     */
+    public function testSeekWithHeaders()
+    {
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_column_headers.xlsx');
+        $reader = new ExcelReader($file, 0);
+
+        // TODO: Check if row 0 should return the header row if headers are enabled.
+        // Row 0 returns the header row as data and indexes.
+        $row = $reader->getRow(0);
+        $this->assertEquals(
+            array(
+                'id'          => 'id',
+                'number'      => 'number',
+                'description' => 'description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(3);
+        $this->assertEquals(
+            array(
+                'id'          => 7.0,
+                'number'      => 7890.0,
+                'description' => 'Some more info',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(1);
+        $this->assertEquals(
+            array(
+                'id'          => 50.0,
+                'number'      => 123.0,
+                'description' => 'Description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(2);
+        $this->assertEquals(
+            array(
+                'id'          => 6.0,
+                'number'      => 456.0,
+                'description' => 'Another description',
+            ),
+            $row
+        );
+    }
+
+    /**
+     *
+     */
+    public function testSeekWithoutHeaders()
+    {
+        $file   = new \SplFileObject(__DIR__.'/fixtures/data_no_column_headers.xls');
+        $reader = new ExcelReader($file);
+
+        $row = $reader->getRow(2);
+        $this->assertEquals(
+            array(
+                7.0,
+                7890.0,
+                'Some more info',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(0);
+        $this->assertEquals(
+            array(
+                50.0,
+                123.0,
+                'Description',
+            ),
+            $row
+        );
+
+        $row = $reader->getRow(1);
+        $this->assertEquals(
+            array(
+                6.0,
+                456.0,
+                'Another description',
+            ),
+            $row
+        );
+    }
 }
