@@ -1,7 +1,32 @@
 <?php
+/*
+The MIT License (MIT)
 
+Copyright (c) 2015 PortPHP
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 namespace Port\Excel;
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Port\Reader\CountableReader;
 
 /**
@@ -11,26 +36,11 @@ use Port\Reader\CountableReader;
  *
  * @author David de Boer <david@ddeboer.nl>
  *
- * @link http://phpexcel.codeplex.com/
- * @link https://github.com/logiQ/PHPExcel
+ * @see http://phpexcel.codeplex.com/
+ * @see https://github.com/logiQ/PHPExcel
  */
 class ExcelReader implements CountableReader, \SeekableIterator
 {
-    /**
-     * @var array
-     */
-    protected $worksheet;
-
-    /**
-     * @var integer
-     */
-    protected $headerRowNumber;
-
-    /**
-     * @var integer
-     */
-    protected $pointer = 0;
-
     /**
      * @var array
      */
@@ -39,32 +49,51 @@ class ExcelReader implements CountableReader, \SeekableIterator
     /**
      * Total number of rows
      *
-     * @var integer
+     * @var int
      */
     protected $count;
 
     /**
+     * @var int
+     */
+    protected $headerRowNumber;
+
+    /**
+     * @var int
+     */
+    protected $pointer = 0;
+
+    /**
+     * @var array
+     */
+    protected $worksheet;
+
+    // phpcs:disable Generic.Files.LineLength.MaxExceeded
+    /**
      * @param \SplFileObject $file            Excel file
-     * @param integer        $headerRowNumber Optional number of header row
-     * @param integer        $activeSheet     Index of active sheet to read from
-     * @param boolean        $readOnly        If set to false, the reader take care of the excel formatting (slow)
-     * @param integer        $maxRows         Maximum number of rows to read
+     * @param int            $headerRowNumber Optional number of header row
+     * @param int            $activeSheet     Index of active sheet to read from
+     * @param bool           $readOnly        If set to false, the reader take care of the excel formatting (slow)
+     * @param int            $maxRows         Maximum number of rows to read
      */
     public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true, $maxRows = null)
     {
-        $reader = \PHPExcel_IOFactory::createReaderForFile($file->getPathName());
+        // phpcs:enable Generic.Files.LineLength.MaxExceeded
+        $reader = IOFactory::createReaderForFile($file->getPathName());
         $reader->setReadDataOnly($readOnly);
-        /** @var \PHPExcel $excel */
+        /** @var Spreadsheet $excel */
         $excel = $reader->load($file->getPathname());
 
         if (null !== $activeSheet) {
             $excel->setActiveSheetIndex($activeSheet);
         }
+
+        /** @var Worksheet $sheet */
         $sheet = $excel->getActiveSheet();
 
         if ($maxRows && $maxRows < $sheet->getHighestDataRow()) {
-            $maxColumn = $sheet->getHighestDataColumn();
-            $this->worksheet = $sheet->rangeToArray('A1:' . $maxColumn . $maxRows);
+            $maxColumn       = $sheet->getHighestDataColumn();
+            $this->worksheet = $sheet->rangeToArray('A1:'.$maxColumn.$maxRows);
         } else {
             $this->worksheet = $excel->getActiveSheet()->toArray();
         }
@@ -75,28 +104,37 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        $count = count($this->worksheet);
+        if (null !== $this->headerRowNumber) {
+            $count--;
+        }
+
+        return $count;
+    }
+
+    /**
      * Return the current row as an array
      *
      * If a header row has been set, an associative array will be returned
      *
-     * @return array
+     * @return array|null
      */
     public function current()
     {
         $row = $this->worksheet[$this->pointer];
 
-        // If the CSV has column headers, use them to construct an associative
+        // If the excel file has column headers, use them to construct an associative
         // array for the columns in this line
-        if (!empty($this->columnHeaders)) {
-            // Count the number of elements in both: they must be equal.
-            // If not, ignore the row
-            if (count($this->columnHeaders) == count($row)) {
-                return array_combine(array_values($this->columnHeaders), $row);
-            }
-        } else {
-            // Else just return the column values
-            return $row;
+        if (count($this->columnHeaders) === count($row)) {
+            return array_combine(array_values($this->columnHeaders), $row);
         }
+
+        // Else just return the column values
+        return $row;
     }
 
     /**
@@ -110,13 +148,37 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * Set column headers
+     * Get a row
      *
-     * @param array $columnHeaders
+     * @param int $number
+     *
+     * @return array
      */
-    public function setColumnHeaders(array $columnHeaders)
+    public function getRow($number)
     {
-        $this->columnHeaders = $columnHeaders;
+        $this->seek($number);
+
+        return $this->current();
+    }
+
+    /**
+     * Return the key of the current element
+     *
+     * @return int
+     */
+    public function key()
+    {
+        return $this->pointer;
+    }
+
+    /**
+     * Move forward to next element
+     *
+     * @return void Any returned value is ignored.
+     */
+    public function next()
+    {
+        $this->pointer++;
     }
 
     /**
@@ -125,6 +187,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
      * If a header row has been set, the pointer is set just below the header
      * row. That way, when you iterate over the rows, that header row is
      * skipped.
+     *
+     * @return void Any returned value is ignored.
      */
     public function rewind()
     {
@@ -136,42 +200,13 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * Set header row number
+     * Seeks to a position
      *
-     * @param integer $rowNumber Number of the row that contains column header names
-     */
-    public function setHeaderRowNumber($rowNumber)
-    {
-        $this->headerRowNumber = $rowNumber;
-        $this->columnHeaders = $this->worksheet[$rowNumber];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
-    {
-        $this->pointer++;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
-    {
-         return isset($this->worksheet[$this->pointer]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
-    {
-        return $this->pointer;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @link http://php.net/manual/en/seekableiterator.seek.php
+     *
+     * @param int $pointer The position to seek to.
+     *
+     * @return void Any returned value is ignored.
      */
     public function seek($pointer)
     {
@@ -179,29 +214,38 @@ class ExcelReader implements CountableReader, \SeekableIterator
     }
 
     /**
-     * {@inheritdoc}
+     * Set column headers
+     *
+     * @param array $columnHeaders
+     *
+     * @return void Any returned value is ignored.
      */
-    public function count()
+    public function setColumnHeaders(array $columnHeaders)
     {
-        $count = count($this->worksheet);
-        if (null !== $this->headerRowNumber) {
-            $count--;
-        }
-
-        return $count;
+        $this->columnHeaders = $columnHeaders;
     }
 
     /**
-     * Get a row
+     * Set header row number
      *
-     * @param integer $number
+     * @param int $rowNumber Number of the row that contains column header names
      *
-     * @return array
+     * @return void Any returned value is ignored.
      */
-    public function getRow($number)
+    public function setHeaderRowNumber($rowNumber)
     {
-        $this->seek($number);
+        $this->headerRowNumber = $rowNumber;
+        $this->columnHeaders   = $this->worksheet[$rowNumber];
+    }
 
-        return $this->current();
+    /**
+     * Checks if current position is valid
+     *
+     * @return bool The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     */
+    public function valid()
+    {
+        return isset($this->worksheet[$this->pointer]);
     }
 }

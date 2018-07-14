@@ -12,7 +12,7 @@ matrix:
   include:
     - php: 5.6
       env:
-        - COMPOSER_FLAGS="--prefer-lowest --prefer-stable"
+        - COMPOSER_FLAGS="--prefer-stable"
         - COVERAGE=true
         - PHPUNIT_FLAGS="--coverage-clover=coverage.clover"
 
