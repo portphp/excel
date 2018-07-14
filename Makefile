@@ -13,6 +13,7 @@ clean:
 # End Cleaning Targets
 
 # Begin Test Targets
+test: test.all
 test.all: phpcs phpunit phpstan
 test.strict: phpcs.warnings phpunit phpstan
 
