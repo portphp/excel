@@ -26,6 +26,7 @@ namespace Port\Excel;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Port\Reader\CountableReader;
 
 /**
@@ -86,6 +87,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
         if (null !== $activeSheet) {
             $excel->setActiveSheetIndex($activeSheet);
         }
+
+        /** @var Worksheet $sheet */
         $sheet = $excel->getActiveSheet();
 
         if ($maxRows && $maxRows < $sheet->getHighestDataRow()) {
