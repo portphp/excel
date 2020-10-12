@@ -3,6 +3,7 @@
 namespace Port\Excel;
 
 use Port\Reader\CountableReader;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Reads Excel files with the help of PHPExcel
@@ -52,10 +53,8 @@ class ExcelReader implements CountableReader, \SeekableIterator
      */
     public function __construct(\SplFileObject $file, $headerRowNumber = null, $activeSheet = null, $readOnly = true, $maxRows = null)
     {
-        $reader = \PHPExcel_IOFactory::createReaderForFile($file->getPathName());
-        $reader->setReadDataOnly($readOnly);
-        /** @var \PHPExcel $excel */
-        $excel = $reader->load($file->getPathname());
+        $path = $file->getRealPath();
+        $excel = IOFactory::load($path);
 
         if (null !== $activeSheet) {
             $excel->setActiveSheetIndex($activeSheet);

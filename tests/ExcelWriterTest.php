@@ -3,8 +3,10 @@
 namespace Port\Excel\Tests;
 
 use Port\Excel\ExcelWriter;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PHPUnit\Framework\TestCase;
 
-class ExcelWriterTest extends \PHPUnit_Framework_TestCase
+class ExcelWriterTest extends TestCase
 {
     public function setUp()
     {
@@ -48,25 +50,13 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
 
         $writer->finish();
 
-        $excel = \PHPExcel_IOFactory::load($file);
+        $excel = IOFactory::load($file);
 
         $this->assertTrue($excel->sheetNameExists('Sheet 1'));
         $this->assertEquals(3, $excel->getSheetByName('Sheet 1')->getHighestRow());
 
         $this->assertTrue($excel->sheetNameExists('Sheet 2'));
         $this->assertEquals(2, $excel->getSheetByName('Sheet 2')->getHighestRow());
-    }
-
-    public function testWriteItemWithoutSheetTitle()
-    {
-        $outputFile = new \SplFileObject(tempnam(sys_get_temp_dir(), null));
-        $writer = new ExcelWriter($outputFile);
-
-        $writer->prepare();
-
-        $writer->writeItem(array('first', 'last'));
-
-        $writer->finish();
     }
 
     /**
@@ -79,7 +69,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
     {
         $file = tempnam(sys_get_temp_dir(), null);
 
-        $writer = new ExcelWriter(new \SplFileObject($file, 'w'), null, 'Excel2007');
+        $writer = new ExcelWriter(new \SplFileObject($file, 'w'), null, 'Xlsx');
         $writer->prepare();
         $writer->writeItem(array(
             'col 1 name'=>'col 1 value',
@@ -88,7 +78,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
         ));
         $writer->finish();
 
-        $excel = \PHPExcel_IOFactory::load($file);
+        $excel = IOFactory::load($file);
         $sheet = $excel->getActiveSheet()->toArray();
 
         # Values should be at first line
@@ -107,7 +97,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
     {
         $file = tempnam(sys_get_temp_dir(), null);
 
-        $writer = new ExcelWriter(new \SplFileObject($file, 'w'), null, 'Excel2007', true);
+        $writer = new ExcelWriter(new \SplFileObject($file, 'w'), null, 'Xlsx', true);
         $writer->prepare();
         $writer->writeItem(array(
             'col 1 name'=>'col 1 value',
@@ -116,7 +106,7 @@ class ExcelWriterTest extends \PHPUnit_Framework_TestCase
         ));
         $writer->finish();
 
-        $excel = \PHPExcel_IOFactory::load($file);
+        $excel = IOFactory::load($file);
         $sheet = $excel->getActiveSheet()->toArray();
 
         # Check column names at first line

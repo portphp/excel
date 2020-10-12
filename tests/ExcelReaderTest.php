@@ -3,8 +3,9 @@
 namespace Port\Excel\Tests;
 
 use Port\Excel\ExcelReader;
+use PHPUnit\Framework\TestCase;
 
-class ExcelReaderTest extends \PHPUnit_Framework_TestCase
+class ExcelReaderTest extends TestCase
 {
     public function setUp()
     {
