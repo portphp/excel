@@ -1,38 +1,41 @@
 # portphp/excel
 
+> **DEPRECATED.** This package depends on the abandoned [PHPExcel](https://github.com/PHPOffice/PHPExcel) library and is no longer maintained.
+>
+> Use **[portphp/spreadsheet](https://github.com/portphp/spreadsheet)** (PhpSpreadsheet) instead:
+>
+> ```bash
+> composer require portphp/spreadsheet
+> ```
+
 [![Latest Version](https://img.shields.io/github/release/portphp/excel.svg?style=flat-square)](https://github.com/portphp/excel/releases)
-[![Build Status](https://travis-ci.org/portphp/excel.svg)](https://travis-ci.org/portphp/excel)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/portphp/excel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/portphp/excel/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/portphp/excel/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/portphp/excel/?branch=master)
+[![PHP Version](https://img.shields.io/packagist/php-v/portphp/excel.svg?style=flat-square)](https://packagist.org/packages/portphp/excel)
 
-Excel reader and writer for [Port](https://github.com/portphp).
+Excel reader and writer for [Port](https://github.com/portphp) based on PHPExcel.
 
-## Installation
+## Migration
 
-Open a command console, enter your project directory and execute the
-following command to download the latest stable version of this package:
+| Old (`portphp/excel`) | New (`portphp/spreadsheet`) |
+|----------------------|-----------------------------|
+| `Port\Excel\ExcelReader` | `Port\Spreadsheet\SpreadsheetReader` |
+| `Port\Excel\ExcelWriter` | `Port\Spreadsheet\SpreadsheetWriter` |
+| `phpoffice/phpexcel` | `phpoffice/phpspreadsheet` |
+
+Namespace and class names differ; APIs are intentionally similar for easy migration.
+
+## Installation (not recommended)
 
 ```bash
 $ composer require portphp/excel
 ```
 
-This command requires you to have Composer installed globally, as explained
-in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-of the Composer documentation.
-
 ## Documentation
 
-Documentation is available at https://portphp.readthedocs.org.
+Historical docs: https://portphp.readthedocs.io. Prefer the spreadsheet package docs going forward.
 
 ## Issues and feature requests
 
 Please report issues and request features at https://github.com/portphp/portphp/issues.
-
-## Contributing
-
-Contributions are very welcome. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for
-details. Thanks to [everyone who has contributed](https://github.com/portphp/excel/graphs/contributors)
-already.
 
 ## License
 

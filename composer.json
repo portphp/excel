@@ -1,6 +1,6 @@
 {
     "name": "portphp/excel",
-    "description": "Excel reader and writer for Port",
+    "description": "DEPRECATED: Excel reader/writer for Port (use portphp/spreadsheet)",
     "license": "MIT",
     "homepage": "https://github.com/portphp",
     "authors": [
@@ -20,7 +20,7 @@
     "support": {
         "issues": "https://github.com/portphp/portphp/issues",
         "source": "https://github.com/portphp/excel",
-        "docs": "https://portphp.readthedocs.org"
+        "docs": "https://portphp.readthedocs.io"
     },
     "require": {
         "portphp/portphp": "^1.2.0",
@@ -43,5 +43,6 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
-    }
+    },
+    "abandoned": "portphp/spreadsheet"
 }
